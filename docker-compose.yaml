@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+
+  db:
+    build:
+      context: ./postgres_init
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - POSTGRES_USER=example
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 5432:5432
+
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  flask_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: on-failure
+    environment:
+      - DB_STR=postgresql://example@db/example
+    ports:
+      - 5000:5000
+    depends_on:
+      - db

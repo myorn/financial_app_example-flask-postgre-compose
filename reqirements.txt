@@ -1,0 +1,6 @@
+flask
+sqlalchemy
+webargs
+psycopg2-binary
+requests
+pytest
